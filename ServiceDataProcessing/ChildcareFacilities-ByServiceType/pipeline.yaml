@@ -1,0 +1,46 @@
+steps:
+  - name: OpenDataDownload
+    type: download
+    download_config: download_config.json
+    download_dir: data
+
+  - name: FixCSVHeader
+    type: rm_dq
+    input_file: ./data/13201gakudouichiran.csv
+    output_file: ./data/fixed_13201gakudouichiran.csv
+
+  - name: MergeData
+    type: merge
+    transform_config: mapping_rules.json
+    input_files: [
+        ./data/fixed_13201gakudouichiran.csv
+        ,./data/13103hoikuen201612.csv
+        ,./data/13103hoikusupport201612.csv
+        ,./data/13103kosodatehiroba201612.csv
+        ,./data/13112hoiku.csv
+        ,./data/13112jido.csv
+        ,./data/13112kodomo.csv
+        ,./data/13119attach681571.csv
+        ,./data/1312017hattatsushien.csv
+        ,./data/1312033jidoukan.csv
+        ,./data/13120kuritsuhoikuen.csv
+        ,./data/1312320150914kosodate.csv
+        ,./data/13213chiikigatahoiku.csv
+        ,./data/13213jidoclub.csv
+        ,./data/13213jidokan.csv
+        ,./data/13213kosodate.csv
+        ,./data/13213ninkahoikujo.csv
+        ,./data/13213ninsyohoikushitsu.csv
+        ,./data/13213sonotahoikushitsu.csv
+        ,./data/13218gakudouclub.csv
+        ,./data/13218nurseryschool.csv
+        ,./data/132217preschool-gakudo.csv
+        ,./data/132217preschoolhoi-you.csv
+        ,./data/13223gakudo.csv
+        ,./data/13223hoikuen.csv
+        ,./data/13223jidokan.csv
+        ,./data/13223jidoyuen.csv
+        ,./data/13225c191.csv
+        ,./data/13109kyoikushisetsu.csv]
+    output_file: merged.csv
+

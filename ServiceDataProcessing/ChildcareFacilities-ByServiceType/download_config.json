@@ -1,0 +1,253 @@
+{
+    "title": "東京都内の子育て支援施設情報検索結果",
+    "description": "（データの説明文）",
+    "files": [
+        {
+            "title": "131121_東京都_世田谷区_保育・子育て支援施設 - 子ども関係施設",
+            "url": "https://www.geospatial.jp/ckan/dataset/82b439bf-98bc-46ce-88c5-678add8f6c0f/resource/45d21c3a-8216-4ce1-8cee-87c5e59065de/download/13112kodomo.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13112kodomo.csv",
+            "attribution": "政策経営部 情報政策課",
+            "license": "CC BY(表示)",
+            "filename": "13112kodomo.csv"
+        },
+        {
+            "title": "131121_東京都_世田谷区_保育・子育て支援施設 - 児童館",
+            "url": "https://www.geospatial.jp/ckan/dataset/82b439bf-98bc-46ce-88c5-678add8f6c0f/resource/5f5922e7-b34e-40b6-a266-cf6e38403c6f/download/13112jido.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13112jido.csv",
+            "attribution": "政策経営部 情報政策課",
+            "license": "CC BY(表示)",
+            "filename": "13112jido.csv"
+        },
+        {
+            "title": "131121_東京都_世田谷区_保育・子育て支援施設 - 保育所",
+            "url": "https://www.geospatial.jp/ckan/dataset/82b439bf-98bc-46ce-88c5-678add8f6c0f/resource/ec75b939-30f3-4afd-b26e-956712d6308b/download/13112hoiku.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13112hoiku.csv",
+            "attribution": "政策経営部 情報政策課",
+            "license": "CC BY(表示)",
+            "filename": "13112hoiku.csv"
+        },
+        {
+            "title": "132136_東京都_東村山市_保育・子育て支援施設 - 認可保育所",
+            "url": "https://www.geospatial.jp/ckan/dataset/5d968130-5247-4780-bb7c-6c4dbec58dcf/resource/8767b574-bb1b-47a8-8591-ddd54d54eae9/download/13213ninkahoikujo.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13213ninkahoikujo.csv",
+            "attribution": "経営政策部秘書広報課",
+            "license": "CC BY(表示)",
+            "filename": "13213ninkahoikujo.csv"
+        },
+        {
+            "title": "132136_東京都_東村山市_保育・子育て支援施設 - 地域型保育事業",
+            "url": "https://www.geospatial.jp/ckan/dataset/5d968130-5247-4780-bb7c-6c4dbec58dcf/resource/87358c6d-aa84-4110-8c50-69a550a6ee6c/download/13213chiikigatahoiku.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13213chiikigatahoiku.csv",
+            "attribution": "経営政策部秘書広報課",
+            "license": "CC BY(表示)",
+            "filename": "13213chiikigatahoiku.csv"
+        },
+        {
+            "title": "132136_東京都_東村山市_保育・子育て支援施設 - 認可外教育・教育施設",
+            "url": "https://www.geospatial.jp/ckan/dataset/5d968130-5247-4780-bb7c-6c4dbec58dcf/resource/b7ddff43-c737-4d3f-b013-23fc5f4847e9/download/13213ninsyohoikushitsu.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13213ninsyohoikushitsu.csv",
+            "attribution": "経営政策部秘書広報課",
+            "license": "CC BY(表示)",
+            "filename": "13213ninsyohoikushitsu.csv"
+        },
+        {
+            "title": "132136_東京都_東村山市_保育・子育て支援施設 - その他保育室",
+            "url": "https://www.geospatial.jp/ckan/dataset/5d968130-5247-4780-bb7c-6c4dbec58dcf/resource/dbe45e84-01c1-4f95-b756-6ee797d83b6e/download/13213sonotahoikushitsu.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13213sonotahoikushitsu.csv",
+            "attribution": "経営政策部秘書広報課",
+            "license": "CC BY(表示)",
+            "filename": "13213sonotahoikushitsu.csv"
+        },
+        {
+            "title": "132136_東京都_東村山市_保育・子育て支援施設 - 児童クラブ",
+            "url": "https://www.geospatial.jp/ckan/dataset/5d968130-5247-4780-bb7c-6c4dbec58dcf/resource/268845fa-05fa-49b6-82a8-03ae86c2ff0e/download/13213jidoclub.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13213jidoclub.csv",
+            "attribution": "経営政策部秘書広報課",
+            "license": "CC BY(表示)",
+            "filename": "13213jidoclub.csv"
+        },
+        {
+            "title": "132136_東京都_東村山市_保育・子育て支援施設 - 児童館",
+            "url": "https://www.geospatial.jp/ckan/dataset/5d968130-5247-4780-bb7c-6c4dbec58dcf/resource/b5bfb107-33d7-44a0-9047-aa6414605483/download/13213jidokan.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13213jidokan.csv",
+            "attribution": "経営政策部秘書広報課",
+            "license": "CC BY(表示)",
+            "filename": "13213jidokan.csv"
+        },
+        {
+            "title": "132136_東京都_東村山市_保育・子育て支援施設 - 子育て支援",
+            "url": "https://www.geospatial.jp/ckan/dataset/5d968130-5247-4780-bb7c-6c4dbec58dcf/resource/32af4153-3283-4947-b47d-1dd30a606a4e/download/13213kosodate.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13213kosodate.csv",
+            "attribution": "経営政策部秘書広報課",
+            "license": "CC BY(表示)",
+            "filename": "13213kosodate.csv"
+        },
+        {
+            "title": "131199_東京都_板橋区_保育・子育て支援施設 - 児童施設",
+            "url": "https://www.geospatial.jp/ckan/dataset/3b57f2a9-3bb7-4adf-9630-c51b12a615ab/resource/c9dc38e3-32d6-4499-8d21-24f3bd584840/download/13119attach681571.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13119attach681571.csv",
+            "attribution": "子ども家庭部 子ども政策課",
+            "license": "CC BY(表示)",
+            "filename": "13119attach681571.csv"
+        },
+        {
+            "title": "131237_東京都_江戸川区_保育・子育て支援施設 - 子育て施設",
+            "url": "https://www.geospatial.jp/ckan/dataset/2e6ebade-e998-432a-9825-3c1741f8cade/resource/5d1a13e4-9338-4e02-9c04-41ee4774d4e0/download/1312320150914kosodate.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/1312320150914kosodate.csv",
+            "attribution": "経営企画部 広報課",
+            "license": "CC BY(表示)",
+            "filename": "1312320150914kosodate.csv"
+        },
+        {
+            "title": "131202_東京都_練馬区_保育・子育て支援施設 - こども発達支援センター",
+            "url": "https://www.geospatial.jp/ckan/dataset/042888c0-549a-48bd-b131-ded3619c4a30/resource/e7ad4073-bee6-4b31-8204-26ebe7dae3e1/download/1312017hattatsushien.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/1312017hattatsushien.csv",
+            "attribution": "福祉部障害者サービス調整担当課",
+            "license": "CC BY(表示)",
+            "filename": "1312017hattatsushien.csv"
+        },
+        {
+            "title": "131202_東京都_練馬区_保育・子育て支援施設 - 区立保育園",
+            "url": "https://www.geospatial.jp/ckan/dataset/042888c0-549a-48bd-b131-ded3619c4a30/resource/4d6b77df-ec3d-4228-b55f-264df96eb66a/download/13120kuritsuhoikuen.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13120kuritsuhoikuen.csv",
+            "attribution": "福祉部障害者サービス調整担当課",
+            "license": "CC BY(表示)",
+            "filename": "13120kuritsuhoikuen.csv"
+        },
+        {
+            "title": "131202_東京都_練馬区_保育・子育て支援施設 - 児童館",
+            "url": "https://www.geospatial.jp/ckan/dataset/042888c0-549a-48bd-b131-ded3619c4a30/resource/5489955e-ac35-4508-9003-c0acc1f51632/download/1312033jidoukan.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/1312033jidoukan.csv",
+            "attribution": "福祉部障害者サービス調整担当課",
+            "license": "CC BY(表示)",
+            "filename": "1312033jidoukan.csv"
+        },
+        {
+            "title": "131032_東京都_港区_保育・子育て支援施設 - 港区内認可保育園等一覧",
+            "url": "https://www.geospatial.jp/ckan/dataset/ef8f7ad4-803b-4c3b-9420-efdb169809e3/resource/6219646c-6409-4385-b603-7363b9f94140/download/13103hoikuen201612.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13103hoikuen201612.csv",
+            "attribution": "情報政策課",
+            "license": "CC BY(表示)",
+            "filename": "13103hoikuen201612.csv"
+        },
+        {
+            "title": "131032_東京都_港区_保育・子育て支援施設 - 子育てひろば・子育て関連施設",
+            "url": "https://www.geospatial.jp/ckan/dataset/ef8f7ad4-803b-4c3b-9420-efdb169809e3/resource/66a0a1d6-99b2-4d48-97fa-d8ce50ea67da/download/13103kosodatehiroba201612.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13103kosodatehiroba201612.csv",
+            "attribution": "情報政策課",
+            "license": "CC BY(表示)",
+            "filename": "13103kosodatehiroba201612.csv"
+        },
+        {
+            "title": "131032_東京都_港区_保育・子育て支援施設 - みなと保育サポート施設",
+            "url": "https://www.geospatial.jp/ckan/dataset/ef8f7ad4-803b-4c3b-9420-efdb169809e3/resource/8d7ef922-f6f1-4947-84a4-6374d1c562e7/download/13103hoikusupport201612.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13103hoikusupport201612.csv",
+            "attribution": "情報政策課",
+            "license": "CC BY(表示)",
+            "filename": "13103hoikusupport201612.csv"
+        },
+        {
+            "title": "132217_東京都_清瀬市_子育て施設一覧（保育園） - 子育て施設一覧（保育園）",
+            "url": "https://www.geospatial.jp/ckan/dataset/d65ad131-b501-4439-8fb5-ed54b6562ac4/resource/870769a4-cbad-4d0e-b96b-67a9ba8f3305/download/132217preschoolhoi-you.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/132217preschoolhoi-you.csv",
+            "attribution": "子育て支援課",
+            "license": "CC-BY4.0",
+            "filename": "132217preschoolhoi-you.csv"
+        },
+        {
+            "title": "132217_東京都_清瀬市_子育て施設一覧（学童クラブ） - 子育て施設一覧（学童クラブ）",
+            "url": "https://www.geospatial.jp/ckan/dataset/ba185474-b860-4a27-908a-ccfb8b11c01e/resource/b0b4fef4-7417-4048-95d7-a95f8e668acb/download/132217preschool-gakudo.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/132217preschool-gakudo.csv",
+            "attribution": "子育て支援課",
+            "license": "CC-BY4.0",
+            "filename": "132217preschool-gakudo.csv"
+        },
+        {
+            "title": "132250_東京都_稲城市_保育・子育て支援施設 - 子育て",
+            "url": "https://www.geospatial.jp/ckan/dataset/b0efb378-64b6-48f7-827c-ec3aec355f44/resource/74097b7f-aeea-4e18-a06e-1128b14eed9e/download/13225c191.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13225c191.csv",
+            "attribution": "子育て支援課・児童青少年課",
+            "license": "CC BY(表示)",
+            "filename": "13225c191.csv"
+        },
+        {
+            "title": "132233_東京都_武蔵村山市_保育・子育て支援施設 - 児童館",
+            "url": "https://www.geospatial.jp/ckan/dataset/410a9496-bd1c-4125-a6b2-a3e7060719f5/resource/c8fc7134-70b9-4cb9-a6f1-3a3e3472c143/download/13223jidokan.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13223jidokan.csv",
+            "attribution": "企画財務部　秘書広報課　広報広聴グループ",
+            "license": "CC BY(表示)",
+            "filename": "13223jidokan.csv"
+        },
+        {
+            "title": "132233_東京都_武蔵村山市_保育・子育て支援施設 - 学童クラブ",
+            "url": "https://www.geospatial.jp/ckan/dataset/410a9496-bd1c-4125-a6b2-a3e7060719f5/resource/110b020d-e8a6-4de2-8a33-4d9b8114ec74/download/13223gakudo.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13223gakudo.csv",
+            "attribution": "企画財務部　秘書広報課　広報広聴グループ",
+            "license": "CC BY(表示)",
+            "filename": "13223gakudo.csv"
+        },
+        {
+            "title": "132233_東京都_武蔵村山市_保育・子育て支援施設 - 保育園",
+            "url": "https://www.geospatial.jp/ckan/dataset/410a9496-bd1c-4125-a6b2-a3e7060719f5/resource/2fdcfeb3-e619-4a98-952d-826fb4321a8c/download/13223hoikuen.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13223hoikuen.csv",
+            "attribution": "企画財務部　秘書広報課　広報広聴グループ",
+            "license": "CC BY(表示)",
+            "filename": "13223hoikuen.csv"
+        },
+        {
+            "title": "132233_東京都_武蔵村山市_保育・子育て支援施設 - 児童遊園",
+            "url": "https://www.geospatial.jp/ckan/dataset/410a9496-bd1c-4125-a6b2-a3e7060719f5/resource/5bf0295a-1171-4e50-af73-92da5d19f1af/download/13223jidoyuen.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13223jidoyuen.csv",
+            "attribution": "企画財務部　秘書広報課　広報広聴グループ",
+            "license": "CC BY(表示)",
+            "filename": "13223jidoyuen.csv"
+        },
+        {
+            "title": "132012_東京都_八王子市_保育・子育て支援施設 - 学童保育所一覧",
+            "url": "https://www.geospatial.jp/ckan/dataset/6285df81-5285-441d-9ca6-361766ed5e6f/resource/7e7eabe5-461b-4a6d-b8dd-1c8fec23d618/download/13201gakudouichiran.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13201gakudouichiran.csv",
+            "attribution": "子ども家庭部児童青少年課",
+            "license": "CC BY(表示)",
+            "filename": "13201gakudouichiran.csv"
+        },
+        {
+            "title": "132187_東京都_福生市_保育・子育て支援施設 - 学童クラブ",
+            "url": "https://www.geospatial.jp/ckan/dataset/0054a331-698e-4102-9c5d-5e5b78ac95a5/resource/e8e85807-832f-4e43-b836-60181cc3f993/download/13218gakudouclub.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13218gakudouclub.csv",
+            "attribution": "福生市役所",
+            "license": "CC BY(表示)",
+            "filename": "13218gakudouclub.csv"
+        },
+        {
+            "title": "132187_東京都_福生市_保育・子育て支援施設 - 保育園・保育所",
+            "url": "https://www.geospatial.jp/ckan/dataset/0054a331-698e-4102-9c5d-5e5b78ac95a5/resource/f5c48b6b-a2dd-40e6-9224-73979a46eeeb/download/13218nurseryschool.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13218nurseryschool.csv",
+            "attribution": "福生市役所",
+            "license": "CC BY(表示)",
+            "filename": "13218nurseryschool.csv"
+        },
+        {
+            "title": "131091_東京都_品川区_保育・子育て支援施設 - 教育・子どもの施設",
+            "url": "https://www.geospatial.jp/ckan/dataset/7a47a557-76d9-4932-9111-d5ab9c37757c/resource/f3fe7701-0d62-4ed8-bee1-53d91b18e8f1/download/kyoikushisetsu.csv",
+            "cache_url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/org_data/13109kyoikushisetsu.csv",
+            "attribution": "",
+            "license": "CC BY(表示)",
+            "filename": "13109kyoikushisetsu.csv"
+        }
+    ],
+    "converters" : [
+        {
+            "description" : "子育て支援施設の項目名変換",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/converters/00001_mapping_rules.json",
+            "filename": "mapping_rules.json"
+        }
+    ],
+    "pipelines" : [
+        {
+            "description" : "子育て支援施設のデータ整形pipeline",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/pipelines/00001_pipeline.yaml",
+            "filename": "pipeline.yaml"
+        }
+    ]
+}
+

@@ -1,0 +1,55 @@
+{
+    "title": "射水市の人口・世帯",
+    "description": "射水市のオープンデータサイトから、人口・世帯に関するPDFを取得する",
+    "files": [
+        {
+            "title": "令和5年4月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/118/118332.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "表記なし",
+            "filename": "118332jp.pdf"
+        },
+        {
+            "title": "令和5年5月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/119/119995.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "表記なし",
+            "filename": "119995jp.pdf"
+        },
+        {
+            "title": "令和5年6月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/120/120003.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "表記なし",
+            "filename": "120003jp.pdf"
+        },
+        {
+            "title": "令和5年7月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/120/120633.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "表記なし",
+            "filename": "120633jp.pdf"
+        },
+        {
+            "title": "令和5年8月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/121/121348.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "表記なし",
+            "filename": "121348jp.pdf"
+        },
+        {
+            "title": "令和5年9月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/122/122029.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "表記なし",
+            "filename": "122029jp.pdf"
+        }
+    ]
+}
+
