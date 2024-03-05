@@ -1,0 +1,10 @@
+steps:
+  - name: OpenDataDownload
+    type: download
+    config: download_config.json
+    download_dir: ./input_dir
+  - name: Imizu-Shi PDF converter
+    type: data_extraction
+    config: 
+    input_dir: ./input_dir
+    output_dir: ./output_dir
