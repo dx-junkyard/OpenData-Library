@@ -37,6 +37,12 @@
             "comment": "処理を定義する",
             "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovDataProcessors/162116_city_imizu/PopulationData/pipeline.yaml",
             "filename": "pipeline.yaml"
+        },
+        {
+            "title": "requirement",
+            "comment": "使用するライブラリ",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovDataProcessors/162116_city_imizu/PopulationData/requirements.txt",
+            "filename": "requirements.txt"
         }
     ]
 }
