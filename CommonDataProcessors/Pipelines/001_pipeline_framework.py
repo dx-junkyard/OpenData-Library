@@ -1,3 +1,4 @@
+import sys
 from step_factory import StepFactory
 import yaml
 
@@ -18,5 +19,6 @@ def execute_pipeline(pipeline_config_path):
         step.execute()
 
 if __name__ == "__main__":
-    execute_pipeline('pipeline.yaml')
+    if len(sys.argv) > 1:
+        execute_pipeline(sys.argv[1])
 
