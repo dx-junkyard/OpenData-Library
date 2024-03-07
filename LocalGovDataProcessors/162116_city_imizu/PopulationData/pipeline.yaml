@@ -1,7 +1,7 @@
 steps:
   - name: OpenDataDownload
     type: download
-    config: download_config.json
+    config: ./pipeline/download_config.json
     download_dir: ./input_dir
   - name: Imizu-Shi PDF converter
     type: data_extraction
