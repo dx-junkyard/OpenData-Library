@@ -2,9 +2,13 @@ steps:
   - name: OpenDataDownload
     type: download
     config: ./pipeline/download_config.json
-    download_dir: ./input_dir
+    output_dir: ./download_dir
+  - name: AttributionProc
+    type: attribution_proc
+    config: ./pipeline/download_config.json
+    output_dir: ./output_dir
   - name: Imizu-Shi PDF converter
     type: data_extraction
     config: 
-    input_dir: ./input_dir
+    input_dir: ./download_dir
     output_dir: ./output_dir

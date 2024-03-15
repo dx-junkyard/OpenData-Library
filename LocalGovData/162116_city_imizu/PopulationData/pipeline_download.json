@@ -5,43 +5,49 @@
         {
             "title": "pipeline",
             "comment": "pipeline v1.0 の本体",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/CommonDataProcessors/Pipelines/001_pipeline_framework.py",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Pipelines/001_pipeline_framework.py",
             "filename": "pipeline_framework.py"
         },
         {
             "title": "pipeline v1.0 step factory",
             "comment": "pipeline v1.0 の本体付属品",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/CommonDataProcessors/Pipelines/002_step_factory.py",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Pipelines/002_step_factory.py",
             "filename": "step_factory.py"
         },
         {
             "title": "pipeline component",
+            "comment": "pipelineの部品（attribution）",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Components/Attribution/001_attribution_processing_step.py",
+            "filename": "attribution_processing_step.py"
+        },
+        {
+            "title": "pipeline component",
             "comment": "pipelineの部品（downloader）",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/CommonDataProcessors/Components/DataFetchers/Downloader/001_download_step.py",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Components/DataFetchers/Downloader/001_download_step.py",
             "filename": "download_step.py"
         },
         {
             "title": "処理対象ファイルのダウンロード定義ファイル",
             "comment": "（なし）",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovDataProcessors/162116_city_imizu/PopulationData/download_config.json",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/162116_city_imizu/PopulationData/pipeline/download_config.json",
             "filename": "download_config.json"
         },
         {
             "title": "データ抽出処理",
             "comment": "PDFからのデータ抽出と整形を行う",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovDataProcessors/162116_city_imizu/PopulationData/data_extraction_step.py",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/162116_city_imizu/PopulationData/pipeline/data_extraction_step.py",
             "filename": "data_extraction_step.py"
         },
         {
             "title": "pipeline定義ファイル",
             "comment": "処理を定義する",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovDataProcessors/162116_city_imizu/PopulationData/pipeline.yaml",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/162116_city_imizu/PopulationData/pipeline/pipeline.yaml",
             "filename": "pipeline.yaml"
         },
         {
             "title": "requirement",
             "comment": "使用するライブラリ",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovDataProcessors/162116_city_imizu/PopulationData/requirements.txt",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/162116_city_imizu/PopulationData/pipeline/requirements.txt",
             "filename": "requirements.txt"
         }
     ]

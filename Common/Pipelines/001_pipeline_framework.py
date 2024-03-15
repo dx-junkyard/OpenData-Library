@@ -5,10 +5,12 @@ import yaml
 # ステップクラスのインポート
 from download_step import DownloadStep
 from data_extraction_step import DataExtractionStep
+from attribution_processing_step import AttributionProcStep
 
 # ステップをファクトリーに登録
 StepFactory.register_step('download', DownloadStep)
 StepFactory.register_step('data_extraction', DataExtractionStep)
+StepFactory.register_step('attribution_proc', AttributionProcStep)
 
 def execute_pipeline(pipeline_config_path):
     with open(pipeline_config_path, 'r') as file:
