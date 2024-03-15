@@ -9,7 +9,7 @@ class DownloadStep:
         # `config`が文字列（ファイルパス）の場合、その内容を読み込む
         with open(step_config['config'], 'r') as f:
             self.config_json = json.load(f)
-        self.download_dir = step_config['download_dir']
+        self.download_dir = step_config['output_dir']
         # ダウンロードディレクトリが存在しない場合は作成
         os.makedirs(self.download_dir, exist_ok=True)
 

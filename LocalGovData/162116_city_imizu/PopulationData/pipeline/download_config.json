@@ -1,0 +1,95 @@
+{
+    "title": "射水市の人口・世帯",
+    "description": "OpenData Bridgeにより、射水市のオープンデータサイトから人口・世帯に関するPDFを取得、データを抽出、CSVに整形して出力",
+    "files": [
+        {
+            "title": "令和5年4月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/118/118332.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "118332jp.pdf"
+        },
+        {
+            "title": "令和5年5月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/119/119995.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "119995jp.pdf"
+        },
+        {
+            "title": "令和5年6月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/120/120003.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "120003jp.pdf"
+        },
+        {
+            "title": "令和5年7月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/120/120633.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "120633jp.pdf"
+        },
+        {
+            "title": "令和5年8月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/121/121348.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "121348jp.pdf"
+        },
+        {
+            "title": "令和5年9月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/122/122029.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "122029jp.pdf"
+        },
+        {
+            "title": "令和5年10月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/122/122528.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "122528jp.pdf"
+        },
+        {
+            "title": "令和5年11月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/123/123163.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "123163jp.pdf"
+        },
+        {
+            "title": "令和5年12月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/123/123913.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "123913jp.pdf"
+        },
+        {
+            "title": "令和6年1月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/124/124712.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "124712jp.pdf"
+        },
+        {
+            "title": "令和6年2月（日本人）",
+            "url": "https://www.city.imizu.toyama.jp/appupload/EDIT/125/125376.pdf",
+            "cache_url": "",
+            "attribution": "射水市　市民課",
+            "license": "CC-BY-4.0",
+            "filename": "125376jp.pdf"
+        }
+    ]
+}
+
