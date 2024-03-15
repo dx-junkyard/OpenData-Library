@@ -2,15 +2,14 @@
 
 ## Libraryの構成
 このライブラリの各ディレクトリには以下の内容が保存されています。
-- CommonDataProcessors
+- Common
   - Components : パイプラインに乗せるコンポーネント
     - DataFetchers : データ取得処理
     - Readers : ExcelやPDFなどからデータを読み取る
+    - Attribution: ダウンロード定義から出典情報を作成する
   - Pipelines : パイプライン処理
-- LocalGovDataProcessors
+- LocalGovData
   - 162116_city_imizu
     - PopulationData：射水市の人口データ
-- ServiceDataProcessors：サービス向けのデータ整形Library
-  - ChildcareFacilities-ByServiceType：子育て施設
 
 
