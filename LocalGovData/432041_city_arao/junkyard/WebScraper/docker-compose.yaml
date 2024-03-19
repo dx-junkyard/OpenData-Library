@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  web-scraper:
+    build:
+      context: .
+    volumes:
+      - .:/work  # 出力ディレクトリをマウント
+    environment:
+      - USER_AGENT=Mozilla/5.0 (Macintosh; Intel Mac OS X 12_6_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.112 Safari/537.36
+      - TARGET_URL=https://www.city.arao.lg.jp/
+      - OUTPUT_DIR=./output
+      - PROGRESS=./app/progress.json
+      - SAVE_EVERY=100
+    working_dir: /work
+
