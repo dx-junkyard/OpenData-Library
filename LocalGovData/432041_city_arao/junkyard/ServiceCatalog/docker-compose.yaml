@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  web-scraper:
+    build:
+      context: .
+    volumes:
+      - .:/work  # 出力ディレクトリをマウント
+    working_dir: /work
+
