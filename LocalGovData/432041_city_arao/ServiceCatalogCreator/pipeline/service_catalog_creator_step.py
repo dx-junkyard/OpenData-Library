@@ -55,7 +55,7 @@ class CatalogCreator:
         return self.events
 
 
-class CatalogCreatorStep:
+class ServiceCatalogCreatorStep:
     def __init__(self, step_config):
         self.progress_json_path = step_config['progress_file']
         self.output_json_path = step_config['output_json_path']

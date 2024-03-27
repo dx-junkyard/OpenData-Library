@@ -3,28 +3,10 @@
     "description": "自治体のホームページをスクレイピングし、取得した全ページのカタログ化を行うpipelineに使用するファイル取得定義",
     "files": [
         {
-            "title": "pipeline",
-            "comment": "pipeline v1.0 の本体",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/pipeline_framework.py",
-            "filename": "pipeline_framework.py"
-        },
-        {
-            "title": "pipeline v1.0 step factory",
-            "comment": "pipeline v1.0 の本体付属品",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Pipelines/002_step_factory.py",
-            "filename": "step_factory.py"
-        },
-        {
-            "title": "pipeline component",
-            "comment": "pipelineの部品（web_scraper）",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/web_scraper_step.py",
-            "filename": "web_scraper_step.py"
-        },
-        {
             "title": "カタログ作成処理",
             "comment": "スクレイピングしたhtmlから行政サービスのカタログを作成する",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/catalog_creator_step.py",
-            "filename": "catalog_creator_step.py"
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/service_catalog_creator_step.py",
+            "filename": "service_catalog_creator_step.py"
         },
         {
             "title": "pipeline定義ファイル",
