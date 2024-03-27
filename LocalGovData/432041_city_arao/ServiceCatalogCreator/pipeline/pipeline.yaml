@@ -1,0 +1,14 @@
+steps:
+  - name: WebScraper
+    type: web_scraper_step
+    output_dir: ./download_dir
+    start_url: https://www.city.arao.lg.jp/
+    user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 12_6_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.112 Safari/537.36
+    output_dir: ./output
+    progress_file: ./progress.json
+    save_every: 10
+    skip_flg: yes
+  - name: CatalogCreattor
+    type: catalog_creator_step
+    progress_file: ./progress.json
+    output_json_path: ./services.json
