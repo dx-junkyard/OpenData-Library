@@ -7,7 +7,7 @@ steps:
     progress_file: ./progress.json
     save_every: 100
     skip_flg: no
-  - name: CatalogCreattor
-    type: catalog_creator_step
+  - name: ServiceCatalogCreattor
+    type: service_catalog_creator_step
     progress_file: ./progress.json
     output_json_path: ./services.json
