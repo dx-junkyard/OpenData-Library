@@ -5,12 +5,10 @@ import yaml
 # ステップクラスのインポート
 from web_scraper_step import WebScraperStep
 from catalog_creator_step import CatalogCreatorStep
-from attribution_processing_step import AttributionProcStep
 
 # ステップをファクトリーに登録
 StepFactory.register_step('web_scraper_step', WebScraperStep)
 StepFactory.register_step('catalog_creator_step', CatalogCreatorStep)
-StepFactory.register_step('attribution_proc', AttributionProcStep)
 
 def execute_pipeline(pipeline_config_path):
     with open(pipeline_config_path, 'r') as file:
