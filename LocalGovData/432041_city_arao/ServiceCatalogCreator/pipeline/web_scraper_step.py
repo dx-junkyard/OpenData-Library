@@ -17,9 +17,9 @@ class WebScraperStep:
         self.user_agent = step_config['user_agent']
         self.output_dir = step_config['output_dir']
         self.progress_file = step_config['progress_file']
+        self.save_every = step_config['save_every']
         self.visited = self.load_progress()
         self.counter = 0
-        self.save_every = 100
         progress_data = self.load_progress()
         self.visited = progress_data.get('visited', {})
         self.to_visit = progress_data.get('to_visit', [self.start_url])
@@ -117,7 +117,7 @@ class WebScraperStep:
 
         print("\nScraping completed.")  # 最後に改行を入れて終了メッセージを表示 
     def execute(self):
-        if self.skip_flg.lower() == 'yes':
+        if self.skip_flg:
             return
         self.scrape_site()
 
