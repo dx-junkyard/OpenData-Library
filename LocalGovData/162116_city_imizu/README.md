@@ -3,7 +3,7 @@
 ## 1. 年齢別人口データをPDFから抽出する
 ### ダウンロード定義の指定
 ```
-export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/LocalGovData/162116_city_imizu/PopulationData/pipeline_download.json"
+export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/162116_city_imizu/PopulationData/pipeline_download.json"
 ```
 
 ### 環境構築＆初回実行
