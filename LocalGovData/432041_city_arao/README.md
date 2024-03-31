@@ -41,12 +41,12 @@ steps:
 
 | パラメータ           | 説明                                                                                        | 対応type  |
 |-------------------|-------------------------------------------------------------------------------------------|:----:|
-| `name`            | ステップの名前。識別およびログ記録の目的で使用されます。                                            | (All)  |
-| `type`            | ステップのタイプで、Python実装内の特定のクラスに対応します。                                        | -  |
+| `name`            | ステップの名前。識別およびログ記録の目的で使用されます。（任意の文字列）                          | (All)  |
+| `type`            | ステップのタイプで、Python実装内の特定のクラスに対応します。[ここで定義されているタイプのみ使用可](https://github.com/dx-junkyard/OpenData-Bridge-pipeline/blob/main/app/pipeline/pipeline_framework.py#L16-L24)             | -  |
 | `start_url`       | Webスクレイピングステップの開始URL。                                                       | web_scraper_step |
 | `user_agent`      | Webスクレイピングリクエストに使用するUser Agent文字列。                                      | web_scraper_step |
 | `output_dir`      | ステップからの出力ファイルを保存するディレクトリ。                                            | (All) |
-| `progress_file`   | 中断の場合に再開可能にするため、ステップの進行状況を追跡するファイル。                               | web_scraper_step |
+| `progress_file`   | 中断の場合に再開可能にするため、ステップの進行状況を追跡するJSONファイル。                               | web_scraper_step, service_catalog_creator_step |
 | `save_every`      | 進行状況を保存する頻度（処理されたアイテムの数）を示します。                                      | web_scraper_step |
 | `skip_flg`        | ステップをスキップするかどうかを示すフラグ。`yes`に設定するとステップがスキップされます。              | (All) |
 | `input_json_path` | 入力データが必要なステップの入力JSONファイルのパス。                                         | (All) |
