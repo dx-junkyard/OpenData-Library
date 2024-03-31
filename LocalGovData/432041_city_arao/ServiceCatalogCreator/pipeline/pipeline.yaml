@@ -6,8 +6,15 @@ steps:
     output_dir: ./output
     progress_file: ./progress.json
     save_every: 100
-    skip_flg: no
+    skip_flg: yes
   - name: ServiceCatalogCreattor
     type: service_catalog_creator_step
     progress_file: ./progress.json
     output_json_path: ./services.json
+    skip_flg: yes
+  - name: clustering
+    type: experimental_step_a
+    input_json_path: ./services.json
+    output_json_path: ./services.kmean.json
+    n_clusters: 5
+    skip_flg: yes
