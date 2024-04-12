@@ -1,0 +1,36 @@
+{
+    "title": "行政サービスのカタログ生成pipelineに使用するファイルのダウンロード定義",
+    "description": "自治体のホームページをスクレイピングし、取得した全ページのカタログ化を行うpipelineに使用するファイル取得定義",
+    "files": [
+        {
+            "title": "カタログ作成処理",
+            "comment": "スクレイピングしたhtmlから行政サービスのカタログを作成する",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/service_catalog_creator_step.py",
+            "filename": "service_catalog_creator_step.py"
+        },
+        {
+            "title": "クラスタリングの実験(A)",
+            "comment": "カタログをクラスタリングする- A",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/experimental_step_a.py",
+            "filename": "experimental_step_a.py"
+        },
+        {
+            "title": "クラスタリングの実験(B)",
+            "comment": "カタログをクラスタリングする- B",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/experimental_step_b.py",
+            "filename": "experimental_step_b.py"
+        },
+        {
+            "title": "pipeline定義ファイル",
+            "comment": "処理を定義する",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/pipeline.yaml",
+            "filename": "pipeline.yaml"
+        },
+        {
+            "title": "requirement",
+            "comment": "使用するライブラリ",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/requirements.txt",
+            "filename": "requirements.txt"
+        }
+    ]
+}

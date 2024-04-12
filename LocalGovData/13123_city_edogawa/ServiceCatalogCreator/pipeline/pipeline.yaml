@@ -1,0 +1,20 @@
+steps:
+  - name: WebScraper
+    type: web_scraper_step
+    start_url: https://www.city.edogawa.tokyo.jp/
+    user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 12_6_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.112 Safari/537.36
+    output_dir: ./output
+    progress_file: ./progress.json
+    save_every: 100
+    skip_flg: no
+  - name: ServiceCatalogCreattor
+    type: service_catalog_creator_step
+    progress_file: ./progress.json
+    output_json_path: ./services.json
+    skip_flg: yes
+  - name: filter
+    type: experimental_step_c
+    input_json_path: ./services.json
+    output_json_path: ./services.keyword.json
+    filter_key: "児,子育,ファミリー,保育,離乳,教育,発達"
+    skip_flg: yes
