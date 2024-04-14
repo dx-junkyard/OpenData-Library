@@ -6,15 +6,16 @@ steps:
     output_dir: ./output
     progress_file: ./progress.json
     save_every: 100
-    skip_flg: no
+    skip_flg: yes
   - name: ServiceCatalogCreattor
     type: service_catalog_creator_step
     progress_file: ./progress.json
     output_json_path: ./services.json
     skip_flg: yes
-  - name: filter
-    type: experimental_step_c
-    input_json_path: ./services.json
-    output_json_path: ./services.keyword.json
+  - name: WebDataToCSV
+    type: web_data2csv
+    progress_file: ./progress.json
+    output_csv_dir: ./output_csv
+    columns_yaml: ./pipeline/columns.yaml
     filter_key: "児,子育,ファミリー,保育,離乳,教育,発達"
-    skip_flg: yes
+    skip_flg: no
