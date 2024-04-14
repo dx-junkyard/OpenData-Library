@@ -21,6 +21,24 @@
             "filename": "experimental_step_b.py"
         },
         {
+            "title": "framework改",
+            "comment": "new framework",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/pipeline_framework.py",
+            "filename": "pipeline_framework.py"
+        },
+        {
+            "title": "HTMLをcsvに変換する",
+            "comment": "HTMLのhタグに基づく階層, tableをcsvとして出力する",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/web_data2csv.py",
+            "filename": "web_data2csv.py"
+        },
+        {
+            "title": "HTMLをcsvに変換する際に使用する定義",
+            "comment": "hタグをカラム名として認識するために使用する定義",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/columns.yaml",
+            "filename": "colmuns.yaml"
+        },
+        {
             "title": "pipeline定義ファイル",
             "comment": "処理を定義する",
             "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/13123_city_edogawa/ServiceCatalogCreator/pipeline/pipeline.yaml",
@@ -33,4 +51,8 @@
             "filename": "requirements.txt"
         }
     ]
+
+---
+(base) $ cp /Users/urakawashinichi/IdeaProjects/dx-junkyard/work_edogawa_2/OpenData-Bridge-pipeline/pipeline/columns.yaml  .
+---
 }
