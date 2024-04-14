@@ -5,26 +5,34 @@ import hashlib
 import pandas as pd
 from bs4 import BeautifulSoup
 
-
+#
 class HtmlConverter:
-    def __init__(self, html_content, yaml_path):
-        self.html_content = html_content
+    def __init__(self, soup, yaml_path):
+        #self.html_content = html_content
+        self.soup = soup
         self.yaml_path = yaml_path
         self.columns = {}
         self.load_yaml()
         self.data = self.extract_info()
 
-    def extract_info(self):
-        with open(self.html_path, 'r', encoding='utf-8') as file:
-            html_content = file.read()
+    def load_yaml(self):
+        try:
+            with open(self.yaml_path, 'r', encoding='utf-8') as file:
+                data = yaml.load(file, Loader=yaml.FullLoader)
+                self.columns = data['columns']
+                #print(f"columns : {str(self.columns)}")
+        except FileNotFoundError:
+            print("指定されたcolumns_yamlファイル{self.yaml_path}が見つかりません。")
+        except OSError as e:
+            print(f"columns_yamlの読み込みでエラーが発生しました: {e.strerror}") 
 
-        soup = BeautifulSoup(self.html_content, 'html.parser')
+    def extract_info(self):
         data = {}
 
         # Initialize facility_name_found as False
         facility_name_found = False
 
-        for header in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
+        for header in self.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
             header_text = header.get_text(strip=True)
             collected_text = []
 
@@ -49,24 +57,31 @@ class HtmlConverter:
         return data
 
     def get_tables(self):
-        df = pd.DataFrame([data])
+        df = pd.DataFrame([self.data])
         tables = []
         tables.append(df)
         return tables
 
+
+# TableExtractor
+# 以下２つの処理を行う
+# 1. html中に直接記載されているテーブルを取得する 
+# 2. htmlの構造をテーブル化する
 class TableExtractor:
     def __init__(self, html_content, url, columns_yaml):
         self.table_list = []
+        self.html_tbl_list = []
         self.html_content = html_content
         self.columns_yaml = columns_yaml
         self.url = url
         # BeautifulSoupでHTMLを解析
         self.soup = BeautifulSoup(html_content, 'html.parser')
         self.extract_tables()
-      
+        self.html_to_table()
+     
+    # 1. html中に直接記載されているテーブルを取得する 
     def extract_tables(self):
-        soup = BeautifulSoup(self.html_content, 'html.parser')
-        tables = soup.find_all('table')
+        tables = self.soup.find_all('table')
         for table in tables:
             try:
                 df = pd.read_html(str(table))[0]
@@ -78,29 +93,16 @@ class TableExtractor:
                 print(f"Table format error: {e}")
                 print(f"  error URL : {self.url}")
  
-    def extract_tables_old(self):
-        try:
-            tables = pd.read_html(str(self.html_content))  # すべてのテーブルをtest読み込み
-            # 実際の読み込み
-            tables = self.soup.find_all('table')
-            for index, table in enumerate(tables):
-                table_data = pd.read_html(str(table))
-                if table_data:
-                    df = table_data[0]
-                    df = df.ffill().bfill()  # セルの結合を解除する処理
-                    self.table_list.append(df)
-                else:
-                    print(f"No tables found in table index {index}")
-        except ValueError as e:
-             #print("Not tables found:", e)
-             return
-
+    # 2. htmlの構造をテーブル化する
     def html_to_table(self):
-        converter = HtmlConverter(self.html_content, columns_yaml)
-        self.table_list.extend(converter.get_tables())
+        converter = HtmlConverter(self.soup, self.columns_yaml)
+        self.html_tbl_list.extend(converter.get_tables())
 
+    # 1,2の手法で取得したテーブルをreturnする
     def get_tables(self):
-        return self.table_list
+        print(f"URL : {self.url}")
+        print(f"  table / html_tbl : {len(self.table_list)} / {len(self.html_tbl_list)}")
+        return self.table_list + self.html_tbl_list or []
 
 
 class WebDataToCSVConvertStep:
