@@ -13,9 +13,9 @@ steps:
     output_json_path: ./services.json
     skip_flg: yes
   - name: WebDataToCSV
-    type: web_data2csv
+    type: web_data2csv_step
     progress_file: ./progress.json
     output_csv_dir: ./output_csv
     columns_yaml: ./pipeline/columns.yaml
-    filter_key: "児,子育,ファミリー,保育,離乳,教育,発達"
-    skip_flg: no
+    include_keywords: "児,子育,ファミリー,保育,離乳,教育,食育,ベビー,赤ちゃん,妊,出産,産後"
+    skip_flg: yes
