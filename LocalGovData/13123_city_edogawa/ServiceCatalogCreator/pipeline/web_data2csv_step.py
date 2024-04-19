@@ -54,6 +54,7 @@ class HtmlConverter:
         self.column_manager = column_manager
 
     def extract_tables(self):
+        headers_stack = []
         dataframes = []
         current_table = {}
         current_name = None
@@ -68,7 +69,14 @@ class HtmlConverter:
             header_text = header.get_text(strip=True)
             #print(f"level({level}), text = {header_text}")
 
+            # サービス名を作るための素材
+            while len(headers_stack) >= level:
+                headers_stack.pop()
+            headers_stack.append(header_text)
+
+            # 
             if self.column_manager.is_column(header_text) or (column_layer_level is None and column_layer_level == level):
+                service_name = " - ".join(headers_stack)
                 column_layer_level = level  # カラムとして扱う層のlevelとして設定
                 current_table[header_text] = self.collect_data(header)
                 #print(f"column_layer_level[{level}] start : header_text = {header_text}")
@@ -76,7 +84,7 @@ class HtmlConverter:
                 # カラム対象の層よりも高い層のヘッダーが現れたら、テーブルとして新たに開始
                 if column_layer_level is None or column_layer_level > level:
                     #print(f"column_layer_level[{level}] end : header_text = {header_text}")
-                    service_name = header_text
+                    service_name = " - ".join(headers_stack)
                     columne_layer_level = None
                     if current_table:
                         df = pd.DataFrame([current_table])
@@ -85,9 +93,9 @@ class HtmlConverter:
                         current_table = {}
                         #print(f"column_layer_level[{level}] end -> add table ")
                 else:
-                    #print(f"column_layer_level[{level}] == : header_text = {header_text}")
                     # データをテーブルに追加
                     current_table.setdefault(header_text, self.collect_data(header))
+                    #print(f"column_layer_level[{level}] == : header_text = {header_text}")
 
         # 最後のテーブルを追加
         if current_table:
