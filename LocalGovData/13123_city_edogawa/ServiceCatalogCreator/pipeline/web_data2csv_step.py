@@ -5,11 +5,6 @@ import hashlib
 import pandas as pd
 from bs4 import BeautifulSoup
 
-import yaml
-import pandas as pd
-from bs4 import BeautifulSoup
-
-
 class ColumnManager:
     def __init__(self, yaml_path):
         self.column_config = {}
@@ -46,64 +41,115 @@ class ColumnManager:
     def get_special_column(self, name):
         return self.special_columns.get(name, None)
 
+    #def validate_table(self, table):
+    #    found_columns = set(table.keys())
+    #    required_columns = set(self.column_config.keys())
+    #    return found_columns & required_columns
+
 
 
 class HtmlConverter:
-    def __init__(self, soup, column_manager):
+    def __init__(self, soup, url, column_manager):
         self.soup = soup
+        self.url = url
         self.column_manager = column_manager
 
     def extract_tables(self):
         headers_stack = []
+        hierarchy_stack = []
         dataframes = []
         current_table = {}
         current_name = None
         current_level = None
         column_layer_level = None
         service_name = None
+        summary = None
 
-        headers = self.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+        tags = self.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul', 'li', 'table', 'a'])
 
-        for i, header in enumerate(headers):
-            level = int(header.name[1])  # h1 -> 1, h2 -> 2, etc.
-            header_text = header.get_text(strip=True)
-            #print(f"level({level}), text = {header_text}")
+        new_service = {
+            'summary': '',
+            'details': [],
+            'tables': None,
+            'url': self.url
+        }
 
-            # サービス名を作るための素材
-            while len(headers_stack) >= level:
-                headers_stack.pop()
-            headers_stack.append(header_text)
-
-            # 
-            if self.column_manager.is_column(header_text) or (column_layer_level is None and column_layer_level == level):
-                service_name = " - ".join(headers_stack)
-                column_layer_level = level  # カラムとして扱う層のlevelとして設定
-                current_table[header_text] = self.collect_data(header)
-                #print(f"column_layer_level[{level}] start : header_text = {header_text}")
-            else:
-                # カラム対象の層よりも高い層のヘッダーが現れたら、テーブルとして新たに開始
-                if column_layer_level is None or column_layer_level > level:
-                    #print(f"column_layer_level[{level}] end : header_text = {header_text}")
-                    service_name = " - ".join(headers_stack)
-                    columne_layer_level = None
-                    if current_table:
-                        df = pd.DataFrame([current_table])
-                        df.insert(0, '名称', service_name)
-                        dataframes.append(df)
-                        current_table = {}
-                        #print(f"column_layer_level[{level}] end -> add table ")
+        for i, tag in enumerate(tags):
+            if tag.name.startswith('h'):
+                level = int(tag.name[1])  # h1 -> 1, h2 -> 2, etc.
+                tag_text = tag.get_text(strip=True)
+                #print(f"level({level}), text = {tag_text}")
+    
+                # 属性、名称を作るためのlist
+                while len(headers_stack) >= level:
+                    headers_stack.pop()
+                headers_stack.append(tag_text)
+    
+                # 
+                if self.column_manager.is_column(tag_text) or (column_layer_level is None and column_layer_level == level):
+                    service_name = headers_stack[-1]
+                    attribute_name = " - ".join(headers_stack[:-1]) if len(headers_stack) > 1 else ""
+                    column_layer_level = level  # カラムとして扱う層のlevelとして設定
+                    current_table[tag_text] = self.collect_data(tag)
+                    #print(f"column_layer_level[{level}] start : tag_text = {tag_text}")
                 else:
-                    # データをテーブルに追加
-                    current_table.setdefault(header_text, self.collect_data(header))
-                    #print(f"column_layer_level[{level}] == : header_text = {header_text}")
-
+                    if summary  == None:
+                        summary = tag_text
+                    # カラム対象の層よりも高い層のヘッダーが現れたら、テーブルとして新たに開始
+                    if column_layer_level is None or column_layer_level > level:
+                        #print(f"column_layer_level[{level}] end : tag_text = {tag_text}")
+                        service_name = headers_stack[-1]
+                        attribute_name = " - ".join(headers_stack[:-1]) if len(headers_stack) > 1 else ""
+                        column_layer_level = None
+                        if current_table:
+                            df = pd.DataFrame([current_table])
+                            df.insert(0, '名称', service_name)
+                            if attribute_name != "":
+                                df.insert(0, '大項目', attribute_name) 
+                            dataframes.append(df)
+                            current_table = {}
+                            #print(f"column_layer_level[{level}] end -> add table ")
+                    else:
+                        # データをテーブルに追加
+                        current_table.setdefault(tag_text, self.collect_data(tag))
+                        #print(f"column_layer_level[{level}] == : tag_text = {tag_text}")
+            else:
+                if tag.name == 'table':
+                    df = pd.read_html(str(tag))[0]
+                    if self.column_manager.validate_table(df):
+                      dataframes.append(df)
+                else:
+                    if new_service['summary']  == None and tag.name != 'table':
+                        new_service['summary'] = tag.get_text(strip=True)
+                    else:
+                        details_content = self.handle_detail_tag(tag)
+                        if details_content:
+                            new_service['details'].append(details_content)
+    
         # 最後のテーブルを追加
         if current_table:
             df = pd.DataFrame([current_table])
             df.insert(0, '名称', service_name)
+            if attribute_name != "":
+                df.insert(0, '大項目', attribute_name) 
             dataframes.append(df)
 
-        return dataframes
+        new_service['tables'] = pd.concat(dataframes, ignore_index=True, sort=False).to_dict(orient='records')
+
+        return new_service
+
+
+    def handle_detail_tag(self, tag):
+        # 各タグの内容を処理
+        if tag.name == 'ul':
+            return [self.handle_detail_tag(li) for li in tag.find_all('li')]
+        elif tag.name == 'li':
+            return tag.text.strip()
+        elif tag.name == 'a':
+            return {'text': tag.get_text(strip=True), 'url': tag.get('href')}
+        else:
+            return tag.text.strip()
+
 
     def collect_data(self, header):
         collected_text = []
@@ -116,51 +162,6 @@ class HtmlConverter:
 
 
 
-# TableExtractor
-# 以下２つの処理を行う
-# 1. html中に直接記載されているテーブルを取得する 
-# 2. htmlの構造をテーブル化する
-class TableExtractor:
-    def __init__(self, soup, url, columns_yaml):
-        self.table_list = []
-        self.html_tbl_list = []
-        self.soup = soup
-        self.columns_yaml = columns_yaml
-        self.url = url
-        self.column_manager = ColumnManager(columns_yaml)
-        self.extract_tables()
-        self.html_to_table()
-     
-    # 1. html中に直接記載されているテーブルを取得する 
-    def extract_tables(self):
-        tables = self.soup.find_all('table')
-        for table in tables:
-            try:
-                df = pd.read_html(str(table))[0]
-                df['URL'] = self.url  # URL列を追加
-                self.table_list.append(df)
-            except ValueError as e:
-                print(f"Failed to parse table: {e}")
-                print(f"  error URL : {self.url}")
-            except IndexError as e:
-                print(f"Table format error: {e}")
-                print(f"  error URL : {self.url}")
-
-    # 2. htmlの構造をテーブル化する
-    def html_to_table(self):
-        converter = HtmlConverter(self.soup, self.column_manager)
-        extracted_tables = converter.extract_tables()
-        for df in extracted_tables:
-            df['URL'] = self.url  # 各DataFrameにURL列を追加
-        self.html_tbl_list.extend(extracted_tables)
- 
-
-    # 1,2の手法で取得したテーブルをreturnする
-    def get_tables(self):
-        print(f"URL : {self.url}")
-        print(f"  table / html_tbl : {len(self.table_list)} / {len(self.html_tbl_list)}")
-        return self.table_list + self.html_tbl_list or []
-
 
 class WebDataToCSVConvertStep:
     def __init__(self, step_config):
@@ -169,6 +170,8 @@ class WebDataToCSVConvertStep:
         self.columns_yaml = step_config['columns_yaml']
         self.url_mapping = self.load_mapping()
         os.makedirs(self.output_csv_dir, exist_ok=True)
+
+        self.column_manager = ColumnManager(self.columns_yaml)
 
         # キーワードリストを適切に処理する
         include_keywords = step_config.get('include_keywords', '')
@@ -200,6 +203,7 @@ class WebDataToCSVConvertStep:
     def execute(self):
         unique_hashes = set()
         unique_tables = []
+        service_json = None
 
         for url, filepath in self.url_mapping.items():
             if filepath.endswith('.html'):
@@ -209,15 +213,22 @@ class WebDataToCSVConvertStep:
                 soup = BeautifulSoup(html_content, 'html.parser')
                 # キーワードチェック
                 if self.should_process(soup):
-                    extractor = TableExtractor(soup, url, self.columns_yaml)
-                    ext_tables = extractor.get_tables()
-                    for ext_table in ext_tables:
-                        table_hash = self.generate_hash(ext_table)
-                        if table_hash not in unique_hashes:
-                            unique_hashes.add(table_hash)
-                            unique_tables.append(ext_table)
+                    try:
+                        extractor = HtmlConverter(soup, url, self.column_manager)
+                        service_json = extractor.extract_tables()
+                    except ValueError as e:
+                        print(f"Failed to parse table: {e}")
+                        print(f"  error URL : {self.url}")
+                    except IndexError as e:
+                        print(f"Table format error: {e}")
+                        print(f"  error URL : {self.url}")
+                    table_hash = self.generate_hash(service_json)
+                    if table_hash not in unique_hashes:
+                        unique_hashes.add(table_hash)
+                        unique_tables.append(service_json)
+                    
 
-        self.df_list = unique_tables
+        self.unique_services = unique_tables
         self.save_table_to_csv(self.output_csv_dir)
 
     def should_process(self, soup):
@@ -244,6 +255,8 @@ class WebDataToCSVConvertStep:
         return include and not exclude
 
     def save_table_to_csv(self, file_path):
-        for index, df in enumerate(self.df_list):
-            df.to_csv(f'{file_path}/table_{index + 1}.csv', index=False)
+        with open(f'{file_path}/service_catalog.json', "w", encoding="utf-8") as f:
+            json.dump(self.unique_services, f, ensure_ascii=False, indent=4)
+        #for index, df in enumerate(self.df_list):
+        #    df.to_csv(f'{file_path}/table_{index + 1}.csv', index=False)
 
