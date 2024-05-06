@@ -1,0 +1,15 @@
+{
+  "to_visit": [
+    "https://www.town.mizuho.tokyo.jp/kosodate/004/004/p007896.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/004/005/p002851.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/006/002/p005164.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/006/001/p002846.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/005/002/p002816.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/006/004/p002852.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/002/p001207.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/006/001/p006452.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/006/003/p002849.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/002/p008068.html",
+    "https://www.town.mizuho.tokyo.jp/kosodate/006/001/p008461.html"
+  ]
+}

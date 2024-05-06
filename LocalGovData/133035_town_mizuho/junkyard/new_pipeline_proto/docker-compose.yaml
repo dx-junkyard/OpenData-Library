@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  data-processor:
+    build:
+      args:
+        PIPELINE_DL_DEF: "${PIPELINE_DL_DEF}"
+      context: .
+    volumes:
+      - .:/work  # 出力ディレクトリをマウント
+
