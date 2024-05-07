@@ -25,6 +25,9 @@ class HTagNode:
     def add_item(self, item):
         self.items.append(item)
 
+    def matches_keywords(self, keywords):
+        # タイトルが指定されたキーワードのいずれかにマッチするか確認
+        return any(keyword in self.title for keyword in keywords)
 
     def add_table(self, table):
         # BeautifulSoupを使用してtableタグを解析
@@ -37,7 +40,7 @@ class HTagNode:
         df = pd.read_html(str(table))[0]
         # DataFrameの既存の列の最後にcaption列を追加
         df['caption'] = caption_text
-        print(f'add table (title = {self.title}, caption = {caption_text}, level={self.level})')
+        #print(f'add table (title = {self.title}, caption = {caption_text}, level={self.level})')
 
         # 変換したDataFrameをtablesリストに追加
         self.tables.append(df)

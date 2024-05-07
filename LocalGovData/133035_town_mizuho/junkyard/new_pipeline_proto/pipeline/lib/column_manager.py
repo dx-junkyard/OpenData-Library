@@ -18,6 +18,9 @@ class ColumnManager:
         except Exception as e:
             print(f"YAML の読み込みでエラーが発生しました: {str(e)}")
 
+    def get_column_config(self):
+        return self.column_config
+
     def is_column(self, text):
         return any(text in values for values in self.column_config.values())
 

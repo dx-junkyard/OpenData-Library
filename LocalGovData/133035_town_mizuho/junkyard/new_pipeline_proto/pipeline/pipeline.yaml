@@ -12,7 +12,14 @@ steps:
     progress_file: ./progress.json
     output_json_path: ./services.json
     skip_flg: yes
-  - name: Html->HTag Layer
+  - name: WebDataToCSV
+    type: web_data2csv_step
+    progress_file: ./progress.json
+    output_json_dir: ./output_json
+    columns_yaml: ./pipeline/columns.yaml
+    include_keywords: "児,子育,ファミリー,保育,離乳,教育,食育,ベビー,赤ちゃん,妊,出産,産後"
+    skip_flg: yes
+  - name: WebDataToCSV(test:ichijihoiku)
     type: html2htaglayer_step
     progress_file: ./progress.json.test.mizuho.one
     output_json_dir: ./output_json_ichijihoiku
