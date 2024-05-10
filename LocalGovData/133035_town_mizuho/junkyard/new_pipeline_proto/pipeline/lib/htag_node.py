@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 class HTagNode:
     def __init__(self, title, level, parent=None):
+        #print(f'[new node] level = {level}, title = [{title}]')
         self.title = title
         self.level = level
         self.parent = parent # 親ノードへの参照
@@ -12,6 +13,27 @@ class HTagNode:
         self.items = []
         self.htag_tables = []
         self.tables = []
+
+    def truncate_list_after_keyword(self, lst, keyword):
+        if keyword in lst:
+            # キーワードが見つかったインデックスを取得
+            index = lst.index(keyword)
+            # キーワード直前のインデックスまでのリストを返す
+            return lst[:index]
+        else:
+            # キーワードがリストにない場合は、元のリストをそのまま返す
+            return lst
+
+    def get_content(self, th=7):
+        content_list = []
+        child_content_list = []
+        if self.level >= th:
+            return content_list
+        for child in self.children:
+            child_content_list += child.get_content(th)
+        content_list = [self.title] + self.items + child_content_list
+        content_list = self.truncate_list_after_keyword(content_list, "このページを評価する")
+        return [s for s in content_list if len(s) > 1]
 
     def add_child(self, child):
         # 新しい子ノードが追加される際、適切な親を見つける
@@ -26,6 +48,10 @@ class HTagNode:
         self.items.append(item)
 
     def matches_keywords(self, keywords):
+        # タイトルが指定されたキーワードのいずれかにマッチするか確認
+        return any(self.title.startswith(keyword) for keyword in keywords)
+
+    def matches_keywords_old(self, keywords):
         # タイトルが指定されたキーワードのいずれかにマッチするか確認
         return any(keyword in self.title for keyword in keywords)
 
