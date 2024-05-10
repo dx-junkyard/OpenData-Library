@@ -4,110 +4,17 @@ import yaml
 import hashlib
 import pandas as pd
 from bs4 import BeautifulSoup
-
-class ColumnManager:
-    def __init__(self, yaml_path):
-        self.column_config = {}
-        self.special_columns = {'名称': None}  # 特殊カラムの初期設定
-        self.load_yaml(yaml_path)
-
-    def load_yaml(self, yaml_path):
-        try:
-            with open(yaml_path, 'r', encoding='utf-8') as file:
-                data = yaml.load(file, Loader=yaml.FullLoader)
-                self.column_config = data['columns']
-        except FileNotFoundError:
-            print(f"指定された YAML ファイル {yaml_path} が見つかりません。")
-        except Exception as e:
-            print(f"YAML の読み込みでエラーが発生しました: {str(e)}")
-
-    def is_column(self, text):
-        return any(text in values for values in self.column_config.values())
-
-    def get_column_name(self, text):
-        for column, identifiers in self.column_config.items():
-            if any(identifier in text for identifier in identifiers):
-                return column
-        return None
-
-    def validate_table(self, table):
-        found_columns = set(table.keys())
-        required_columns = set(self.column_config.keys()) - {'名称'}
-        return len(found_columns & required_columns) > 0
-
-    def set_special_column(self, name, value):
-        self.special_columns[name] = value
-
-    def get_special_column(self, name):
-        return self.special_columns.get(name, None)
-
-    def is_table_columns(self, node):
-        for child in node.children:
-            if self.is_column(child.title):
-                print(f'find table columns: {node.title} -> {child.title}')
-                return True
-        return False
-    def create_table(self, node):
-        if not self.is_table_columns(node):
-            return
-        service = {}
-        service['名称'] = node.title
-        for child in node.children:
-            service[child.title] = "  ".join(child.items)
-
-        node.tables.append(pd.DataFrame([service]))
-            
-
-class Node:
-    def __init__(self, title, level, parent=None):
-        self.title = title
-        self.level = level
-        self.parent = parent # 親ノードへの参照
-        self.children = []
-        self.items = []
-        self.tables = []
-
-    def add_child(self, child):
-        # 新しい子ノードが追加される際、適切な親を見つける
-        current_node = self
-        while current_node.level >= child.level and current_node.parent is not None:
-            current_node = current_node.parent
-        # 適切な親ノードに子を追加
-        current_node.children.append(child)
-        child.parent = current_node
-
-    def add_item(self, item):
-        self.items.append(item)
-
-    def add_table(self, table):
-        print(f'add table (title = {self.title}, level={self.level})')
-        df = pd.read_html(str(table))[0]
-        self.tables.append(df)
-
-    def get_tables(self):
-        if not self.tables:
-            return {}
-        else:
-            return pd.concat(self.tables, ignore_index=True, sort=False).to_dict(orient='records')
-
-    def __repr__(self):
-        return f"Node(title='{self.title}', level={self.level}, items='{self.items[:30]}...', tables='{self.get_tables()}', children={self.children}\n)"
+from lib.column_manager import ColumnManager
+from lib.htag_node import  HTagNode as Node
 
 
 class HtmlConverter:
-    def __init__(self, soup, url, column_manager):
+    def __init__(self, soup, url):
         self.soup = soup
         self.url = url
-        self.column_manager = column_manager
         self.root = Node('Root', level=0)
         self.current_node = self.root
         self.parse_html_to_tree(self.soup.body)
-        self.apply_create_table(self.root)
-
-    def apply_create_table(self, node):
-        self.column_manager.create_table(node)
-        for child in node.children:
-            self.apply_create_table(child)
 
     def parse_html_to_tree(self, soup):
         tags = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'table'], recursive=True)
@@ -139,7 +46,7 @@ class HtmlConverter:
 
 
 
-class WebDataToCSVConvertStep:
+class Html2HtagLayerStep:
     def __init__(self, step_config):
         self.progress_json_path = step_config['progress_file']
         self.output_json_dir = step_config['output_json_dir']
@@ -147,7 +54,7 @@ class WebDataToCSVConvertStep:
         self.url_mapping = self.load_mapping()
         os.makedirs(self.output_json_dir, exist_ok=True)
 
-        self.column_manager = ColumnManager(self.columns_yaml)
+#        self.column_manager = ColumnManager(self.columns_yaml)
 
         # キーワードリストを適切に処理する
         include_keywords = step_config.get('include_keywords', '')
@@ -190,7 +97,8 @@ class WebDataToCSVConvertStep:
                 # キーワードチェック
                 if self.should_process(soup):
                     try:
-                        extractor = HtmlConverter(soup, url, self.column_manager)
+                        #extractor = HtmlConverter(soup, url, self.column_manager)
+                        extractor = HtmlConverter(soup, url)
                         extractor.display_tree()
 
                         #service_json = extractor.extract_tables()
