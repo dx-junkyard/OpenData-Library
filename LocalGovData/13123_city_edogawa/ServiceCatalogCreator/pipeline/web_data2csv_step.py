@@ -5,6 +5,11 @@ import hashlib
 import pandas as pd
 from bs4 import BeautifulSoup
 
+import yaml
+import pandas as pd
+from bs4 import BeautifulSoup
+
+
 class ColumnManager:
     def __init__(self, yaml_path):
         self.column_config = {}
@@ -41,113 +46,121 @@ class ColumnManager:
     def get_special_column(self, name):
         return self.special_columns.get(name, None)
 
-    def is_table_columns(self, node):
-        for child in node.children:
-            if self.is_column(child.title):
-                print(f'find table columns: {node.title} -> {child.title}')
-                return True
-        return False
-    def create_table(self, node):
-        if not self.is_table_columns(node):
-            return
-        service = {}
-        service['名称'] = node.title
-        for child in node.children:
-            service[child.title] = "  ".join(child.items)
-
-        node.tables.append(pd.DataFrame([service]))
-            
-
-class Node:
-    def __init__(self, title, level, parent=None):
-        self.title = title
-        self.level = level
-        self.parent = parent # 親ノードへの参照
-        self.children = []
-        self.items = []
-        self.tables = []
-
-    def add_child(self, child):
-        # 新しい子ノードが追加される際、適切な親を見つける
-        current_node = self
-        while current_node.level >= child.level and current_node.parent is not None:
-            current_node = current_node.parent
-        # 適切な親ノードに子を追加
-        current_node.children.append(child)
-        child.parent = current_node
-
-    def add_item(self, item):
-        self.items.append(item)
-
-    def add_table(self, table):
-        print(f'add table (title = {self.title}, level={self.level})')
-        df = pd.read_html(str(table))[0]
-        self.tables.append(df)
-
-    def get_tables(self):
-        if not self.tables:
-            return {}
-        else:
-            return pd.concat(self.tables, ignore_index=True, sort=False).to_dict(orient='records')
-
-    def __repr__(self):
-        return f"Node(title='{self.title}', level={self.level}, items='{self.items[:30]}...', tables='{self.get_tables()}', children={self.children}\n)"
 
 
 class HtmlConverter:
-    def __init__(self, soup, url, column_manager):
+    def __init__(self, soup, column_manager):
         self.soup = soup
-        self.url = url
         self.column_manager = column_manager
-        self.root = Node('Root', level=0)
-        self.current_node = self.root
-        self.parse_html_to_tree(self.soup.body)
-        self.apply_create_table(self.root)
 
-    def apply_create_table(self, node):
-        self.column_manager.create_table(node)
-        for child in node.children:
-            self.apply_create_table(child)
+    def extract_tables(self):
+        dataframes = []
+        current_table = {}
+        current_name = None
+        current_level = None
+        column_layer_level = None
+        service_name = None
 
-    def parse_html_to_tree(self, soup):
-        tags = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'table'], recursive=True)
-        for tag in tags:
-            if tag.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-                level = int(tag.name[1])  # h1 -> 1, h2 -> 2, ...
-                new_node = Node(tag.get_text(strip=True), level)
-                if level > self.current_node.level:
-                    # 現在のノードが親ノードとして適切である場合
-                    self.current_node.add_child(new_node)
+        headers = self.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+
+        for i, header in enumerate(headers):
+            level = int(header.name[1])  # h1 -> 1, h2 -> 2, etc.
+            header_text = header.get_text(strip=True)
+            #print(f"level({level}), text = {header_text}")
+
+            if self.column_manager.is_column(header_text) or (column_layer_level is None and column_layer_level == level):
+                column_layer_level = level  # カラムとして扱う層のlevelとして設定
+                current_table[header_text] = self.collect_data(header)
+                #print(f"column_layer_level[{level}] start : header_text = {header_text}")
+            else:
+                # カラム対象の層よりも高い層のヘッダーが現れたら、テーブルとして新たに開始
+                if column_layer_level is None or column_layer_level > level:
+                    #print(f"column_layer_level[{level}] end : header_text = {header_text}")
+                    service_name = header_text
+                    columne_layer_level = None
+                    if current_table:
+                        df = pd.DataFrame([current_table])
+                        df.insert(0, '名称', service_name)
+                        dataframes.append(df)
+                        current_table = {}
+                        #print(f"column_layer_level[{level}] end -> add table ")
                 else:
-                    # 新しいノードが現在のノードのレベルと同じかそれ以上の場合、適切な親を見つける
-                    while self.current_node.level >= level:
-                        self.current_node = self.current_node.parent
-                    self.current_node.add_child(new_node)
-                self.current_node = new_node  # 更新された現在のノード
-            elif tag.name == 'table':
-                self.current_node.add_table(tag)
-            elif tag.name == 'p':
-                self.current_node.add_item(tag.get_text(strip=True))
+                    #print(f"column_layer_level[{level}] == : header_text = {header_text}")
+                    # データをテーブルに追加
+                    current_table.setdefault(header_text, self.collect_data(header))
 
-    def display_tree(self, node=None, indent=0):
-        if node is None:
-            node = self.root
-        print(' ' * indent + repr(node))
-        for child in node.children:
-            self.display_tree(child, indent + 2)
+        # 最後のテーブルを追加
+        if current_table:
+            df = pd.DataFrame([current_table])
+            df.insert(0, '名称', service_name)
+            dataframes.append(df)
+
+        return dataframes
+
+    def collect_data(self, header):
+        collected_text = []
+        next_tag = header.find_next_sibling()
+        while next_tag and next_tag.name not in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+            collected_text.append(next_tag.get_text(separator=' ', strip=True))
+            next_tag = next_tag.find_next_sibling()
+        return ' '.join(collected_text)
 
 
+
+
+# TableExtractor
+# 以下２つの処理を行う
+# 1. html中に直接記載されているテーブルを取得する 
+# 2. htmlの構造をテーブル化する
+class TableExtractor:
+    def __init__(self, soup, url, columns_yaml):
+        self.table_list = []
+        self.html_tbl_list = []
+        self.soup = soup
+        self.columns_yaml = columns_yaml
+        self.url = url
+        self.column_manager = ColumnManager(columns_yaml)
+        self.extract_tables()
+        self.html_to_table()
+     
+    # 1. html中に直接記載されているテーブルを取得する 
+    def extract_tables(self):
+        tables = self.soup.find_all('table')
+        for table in tables:
+            try:
+                df = pd.read_html(str(table))[0]
+                df['URL'] = self.url  # URL列を追加
+                self.table_list.append(df)
+            except ValueError as e:
+                print(f"Failed to parse table: {e}")
+                print(f"  error URL : {self.url}")
+            except IndexError as e:
+                print(f"Table format error: {e}")
+                print(f"  error URL : {self.url}")
+
+    # 2. htmlの構造をテーブル化する
+    def html_to_table(self):
+        converter = HtmlConverter(self.soup, self.column_manager)
+        extracted_tables = converter.extract_tables()
+        for df in extracted_tables:
+            df['URL'] = self.url  # 各DataFrameにURL列を追加
+        self.html_tbl_list.extend(extracted_tables)
+ 
+
+    # 1,2の手法で取得したテーブルをreturnする
+    def get_tables(self):
+        print(f"URL : {self.url}")
+        print(f"  table / html_tbl : {len(self.table_list)} / {len(self.html_tbl_list)}")
+        return self.table_list + self.html_tbl_list or []
 
 
 class WebDataToCSVConvertStep:
     def __init__(self, step_config):
         self.progress_json_path = step_config['progress_file']
-        self.output_json_dir = step_config['output_json_dir']
+        self.output_csv_dir = step_config['output_csv_dir']
         self.columns_yaml = step_config['columns_yaml']
         self.url_mapping = self.load_mapping()
-        os.makedirs(self.output_json_dir, exist_ok=True)
-
-        self.column_manager = ColumnManager(self.columns_yaml)
+        os.makedirs(self.output_csv_dir, exist_ok=True)
 
         # キーワードリストを適切に処理する
         include_keywords = step_config.get('include_keywords', '')
@@ -179,7 +192,6 @@ class WebDataToCSVConvertStep:
     def execute(self):
         unique_hashes = set()
         unique_tables = []
-        service_json = None
 
         for url, filepath in self.url_mapping.items():
             if filepath.endswith('.html'):
@@ -189,28 +201,16 @@ class WebDataToCSVConvertStep:
                 soup = BeautifulSoup(html_content, 'html.parser')
                 # キーワードチェック
                 if self.should_process(soup):
-                    try:
-                        extractor = HtmlConverter(soup, url, self.column_manager)
-                        extractor.display_tree()
+                    extractor = TableExtractor(soup, url, self.columns_yaml)
+                    ext_tables = extractor.get_tables()
+                    for ext_table in ext_tables:
+                        table_hash = self.generate_hash(ext_table)
+                        if table_hash not in unique_hashes:
+                            unique_hashes.add(table_hash)
+                            unique_tables.append(ext_table)
 
-                        #service_json = extractor.extract_tables()
-                        #table_hash = self.generate_hash(service_json)
-                        #if table_hash not in unique_hashes:
-                        #    unique_hashes.add(table_hash)
-                        #    unique_tables.append(service_json)
-                    except ValueError as e:
-                        print(f"Failed to parse table: {e}")
-                        print(f"  error URL : {url}")
-                    except IndexError as e:
-                        print(f"Table format error: {e}")
-                        print(f"  error URL : {url}")
-                else:
-                    print(f'処理対象の単語がふくまれていません')
-                
-                    
-
-        #self.unique_services = unique_tables
-        #self.save_table_to_json(self.output_json_dir)
+        self.df_list = unique_tables
+        self.save_table_to_csv(self.output_csv_dir)
 
     def should_process(self, soup):
         headers = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
@@ -235,7 +235,7 @@ class WebDataToCSVConvertStep:
 
         return include and not exclude
 
-    def save_table_to_json(self, file_path):
-        with open(f'{file_path}/service_catalog.json', "w", encoding="utf-8") as f:
-            json.dump(self.unique_services, f, ensure_ascii=False, indent=4)
+    def save_table_to_csv(self, file_path):
+        for index, df in enumerate(self.df_list):
+            df.to_csv(f'{file_path}/table_{index + 1}.csv', index=False)
 
