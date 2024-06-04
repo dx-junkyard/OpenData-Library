@@ -24,7 +24,7 @@
             "title": "library",
             "comment": "カタログ作成機能の部品",
             "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Components/HTagNode/002_column_manager.py",
-            "filename": "lib/002_column_manager.py"
+            "filename": "lib/column_manager.py"
         },
         {
             "title": "library",
@@ -36,7 +36,7 @@
             "title": "スクレイピング処理",
             "comment": "自治体のホームページをスクレイピングする",
             "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Components/DataFetchers/WebScraper/001_web_scraper_step.py",
-            "filename": "001_web_scraper_step.py"
+            "filename": "web_scraper_step.py"
         },
         {
             "title": "カタログ作成処理",
