@@ -7,7 +7,7 @@ steps:
     progress_file: ./progress.json
     save_every: 10
     skip_flg: yes
-  - name: WebDataToCSV(test:ichijihoiku)
+  - name: WebDataToJSON
     type: html2htaglayer_step
     progress_file: ./progress.json
     output_json_dir: ./output_json
