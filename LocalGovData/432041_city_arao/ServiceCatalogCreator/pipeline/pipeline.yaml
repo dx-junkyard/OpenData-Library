@@ -5,16 +5,12 @@ steps:
     user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 12_6_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.112 Safari/537.36
     output_dir: ./output
     progress_file: ./progress.json
-    save_every: 100
+    save_every: 10
     skip_flg: yes
-  - name: ServiceCatalogCreattor
-    type: service_catalog_creator_step
+  - name: WebDataToCSV(test:ichijihoiku)
+    type: html2htaglayer_step
     progress_file: ./progress.json
-    output_json_path: ./services.json
-    skip_flg: yes
-  - name: clustering
-    type: experimental_step_a
-    input_json_path: ./services.json
-    output_json_path: ./services.kmean.json
-    n_clusters: 5
+    output_json_dir: ./output_json
+    columns_yaml: ./pipeline/columns.yaml
+    include_keywords: "相談,窓口,補助,支給,提出,利用,対象,料金,対象,登録,予約,申請,申込み,申し込み,施設,設備"
     skip_flg: yes
