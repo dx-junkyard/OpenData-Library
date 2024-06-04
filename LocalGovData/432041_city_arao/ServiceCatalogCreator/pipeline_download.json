@@ -53,8 +53,8 @@
         {
             "title": "column定義ファイル",
             "comment": "取得対象データの定義",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/column.yaml",
-            "filename": "column.yaml"
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/columns.yaml",
+            "filename": "columns.yaml"
         },
         {
             "title": "requirement",
