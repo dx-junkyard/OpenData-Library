@@ -1,0 +1,66 @@
+{
+    "title": "行政サービスのカタログ生成pipelineに使用するファイルのダウンロード定義",
+    "description": "自治体のホームページをスクレイピングし、取得した全ページのカタログ化を行うpipelineに使用するファイル取得定義",
+    "files": [
+        {
+            "title": "pipeline本体",
+            "comment": "pipeline",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Pipelines/003_pipeline_framework.py",
+            "filename": "pipeline_framework.py"
+        },
+        {
+            "title": "pipeline step",
+            "comment": "pipelineの部品",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Pipelines/002_step_factory.py",
+            "filename": "step_factory.py"
+        },
+        {
+            "title": "library",
+            "comment": "カタログ作成機能の部品",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/lib/htag_node.py"
+            "filename": "lib/htag_node.py"
+        },
+        {
+            "title": "library",
+            "comment": "カタログ作成機能の部品",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Components/HTagNode/002_column_manager.py",
+            "filename": "lib/column_manager.py"
+        },
+        {
+            "title": "library",
+            "comment": "カタログ作成機能の部品",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Components/HTagNode/__init__.py",
+            "filename": "lib/__init__.py"
+        },
+        {
+            "title": "スクレイピング処理",
+            "comment": "自治体のホームページをスクレイピングする",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Components/DataFetchers/WebScraper/001_web_scraper_step.py",
+            "filename": "web_scraper_step.py"
+        },
+        {
+            "title": "カタログ作成処理",
+            "comment": "スクレイピングしたhtmlからhtagの階層構造を作成し、サービスカタログを生成する",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/html2htaglayer_step.py
+            "filename": "html2htaglayer_step.py"
+        },
+        {
+            "title": "pipeline定義ファイル",
+            "comment": "処理を定義する",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/pipeline.yaml",
+            "filename": "pipeline.yaml"
+        },
+        {
+            "title": "column定義ファイル",
+            "comment": "取得対象データの定義",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/columns.yaml",
+            "filename": "columns.yaml"
+        },
+        {
+            "title": "requirement",
+            "comment": "使用するライブラリ",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/requirements.txt",
+            "filename": "requirements.txt"
+        }
+    ]
+}

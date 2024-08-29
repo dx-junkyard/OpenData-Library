@@ -1,0 +1,17 @@
+steps:
+  - name: WebScraper
+    type: web_scraper_step
+    start_url: https://www.town.mizuho.tokyo.jp/kosodate/
+    user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 12_6_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.112 Safari/537.36
+    output_dir: ./output
+    progress_file: ./progress.json
+    save_every: 10
+    skip_flg: yes
+  - name: WebDataToJson(test:kosodate)
+    type: html2htaglayer_step
+    progress_file: ./progress.json
+    output_json_dir: ./output_json
+    columns_yaml: ./pipeline/columns.yaml
+    include_keywords: "病児,病後児,児童,幼児,子育,ファミリー,保育,離乳,食育,ベビー,赤ちゃん,妊,出産,産後"
+    exclude_keywords: "高齢者,介護,災害,ごみ,防犯,火災,震災,水害,災害,防災,AED,気象"
+    skip_flg: yes
