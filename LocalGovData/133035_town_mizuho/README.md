@@ -1,9 +1,9 @@
-# 荒尾市のデータ
+# 瑞穂町のデータ
 
 ## 1. 行政サービスのカタログを作成
 ### ダウンロード定義の指定
 ```
-export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline_download.json"
+export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline_download.json"
 ```
 
 ### 環境構築＆初回実行
@@ -51,7 +51,6 @@ steps:
 | `skip_flg`        | ステップをスキップするかどうかを示すフラグ。`yes`に設定するとステップがスキップされます。              | (All) |
 | `input_json_path` | 入力データが必要なステップの入力JSONファイルのパス。                                         | (All) |
 | `output_json_path`| ステップ結果を保存する出力JSONファイルのパス。                                               | (All) |
-| `n_clusters`      | クラスタリングアルゴリズムで使用するクラスターの数。                                            | experimental_step_a |
 
 
 #### パラメータ設定での注意点
