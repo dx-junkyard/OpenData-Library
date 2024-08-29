@@ -17,7 +17,7 @@
         {
             "title": "library",
             "comment": "カタログ作成機能の部品",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/lib/htag_node.py"
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/lib/htag_node.py",
             "filename": "lib/htag_node.py"
         },
         {
@@ -41,7 +41,7 @@
         {
             "title": "カタログ作成処理",
             "comment": "スクレイピングしたhtmlからhtagの階層構造を作成し、サービスカタログを生成する",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/html2htaglayer_step.py
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/html2htaglayer_step.py",
             "filename": "html2htaglayer_step.py"
         },
         {
