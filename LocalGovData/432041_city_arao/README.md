@@ -13,6 +13,7 @@ git clone https://github.com/dx-junkyard/OpenData-Bridge-pipeline.git && cd Open
 
 ### 試行錯誤
 - データ整形のためのコードと設定ファイル一式は./pipelineの下に配置されます。必要に応じて編集してください
+  - 各ステップを実行するためには./pipeline/pipeline.yaml のskip_flg : no と設定する必要があります。（慣れないうちは１ステップだけ実行する設定がオススメです
 - 以下のコマンドでコンテナを起動し、処理を再度実行します。
 ```
 docker compose up
