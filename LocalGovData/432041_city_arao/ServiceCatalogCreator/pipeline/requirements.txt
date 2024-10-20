@@ -8,3 +8,5 @@ numpy==1.19.5
 pandas
 lxml
 html5lib
+transformers==4.45.2
+torch==2.5.0

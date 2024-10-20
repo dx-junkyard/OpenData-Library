@@ -3,9 +3,12 @@ import json
 import yaml
 import hashlib
 import pandas as pd
+import torch
+import numpy as np
 from bs4 import BeautifulSoup
 from lib.column_manager import ColumnManager
 from lib.htag_node import  HTagNode as Node
+from transformers import BertTokenizer, BertModel
 
 
 class HtmlConverter:
