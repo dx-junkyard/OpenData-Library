@@ -285,7 +285,7 @@ class Html2HtagLayerStep:
         inputs = self.tokenizer(text, return_tensors='pt', max_length=512, truncation=True)
         outputs = self.model(**inputs)
         embedding = outputs.last_hidden_state.mean(dim=1)
-        return embedding.detach().numpy()
+        return embedding.squeeze(0).detach().numpy()
 
     def save_embeddings_to_file(self, embeddings, entries, output_file):
         """
