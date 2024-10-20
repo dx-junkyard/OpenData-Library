@@ -126,7 +126,7 @@ class Html2HtagLayerStep:
             details_dict_list = [{str(key): value for key, value in record.items()} for record in details_dict_list]
         else:
             details_dict_list = details
-       
+
         # JSON 形式でシリアライズするためには、リスト全体をダンプする
         details_str = json.dumps(details_dict_list, sort_keys=True)
         return hashlib.sha256(details_str.encode('utf-8')).hexdigest()
@@ -183,8 +183,7 @@ class Html2HtagLayerStep:
                         print(f"  error URL : {url}")
                 else:
                     print(f'処理対象の単語がふくまれていません')
-                
-                    
+
         self.save_json(unique_tables, self.output_json_dir)
 
     def should_process(self, soup):
