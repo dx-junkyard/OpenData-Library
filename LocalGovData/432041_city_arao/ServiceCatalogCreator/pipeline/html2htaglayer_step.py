@@ -3,9 +3,12 @@ import json
 import yaml
 import hashlib
 import pandas as pd
+import torch
+import numpy as np
 from bs4 import BeautifulSoup
 from lib.column_manager import ColumnManager
 from lib.htag_node import  HTagNode as Node
+from transformers import BertTokenizer, BertModel
 
 
 class HtmlConverter:
@@ -100,6 +103,9 @@ class Html2HtagLayerStep:
         self.output_json_dir = step_config['output_json_dir']
         self.columns_yaml = step_config['columns_yaml']
         self.url_mapping = self.load_mapping()
+        # BERTモデルとトークナイザーの初期化
+        self.tokenizer = BertTokenizer.from_pretrained('cl-tohoku/bert-base-japanese-v3')
+        self.model = BertModel.from_pretrained('cl-tohoku/bert-base-japanese-v3')
         os.makedirs(self.output_json_dir, exist_ok=True)
 
         self.column_manager = ColumnManager(self.columns_yaml)
@@ -126,7 +132,7 @@ class Html2HtagLayerStep:
             details_dict_list = [{str(key): value for key, value in record.items()} for record in details_dict_list]
         else:
             details_dict_list = details
-       
+
         # JSON 形式でシリアライズするためには、リスト全体をダンプする
         details_str = json.dumps(details_dict_list, sort_keys=True)
         return hashlib.sha256(details_str.encode('utf-8')).hexdigest()
@@ -183,9 +189,9 @@ class Html2HtagLayerStep:
                         print(f"  error URL : {url}")
                 else:
                     print(f'処理対象の単語がふくまれていません')
-                
-                    
+
         self.save_json(unique_tables, self.output_json_dir)
+        self.save_embedding(unique_tables, self.output_json_dir)
 
     def should_process(self, soup):
         main_div = soup.find('div', id='contents')
@@ -234,3 +240,63 @@ class Html2HtagLayerStep:
         with open(file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
             print(data)
+
+    def save_embedding(self, data, file_path):
+        """
+        サービス情報の概要テキストをベクトル化し、JSONファイルに保存する
+        :param data: サービス情報のリスト
+        :param file_path: 保存先のファイルパス
+        """
+        overview_embeddings = []
+        entries = []
+
+        for service in data:
+            # 概要テキストを取得
+            overview_items = service.get('概要', {}).get('items', [])
+            if isinstance(overview_items, list):
+                overview = " ".join(overview_items)
+            elif isinstance(overview_items, str):
+                overview = overview_items
+            else:
+                print(f"Invalid format: {overview_items}")
+                continue  # 不正な形式はスキップ
+
+            # テキストが空でない場合のみ処理
+            if overview:
+                embedding = self.get_embedding(overview)
+                overview_embeddings.append(embedding)
+
+                entry = {
+                    'overview': overview,
+                    'formal_name': service.get('正式名称', {}).get('items', ['N/A'])[0],
+                    'url': service.get('URL', {}).get('items', 'N/A')
+                }
+                entries.append(entry)
+
+        # JSONデータとして保存
+        self.save_embeddings_to_file(overview_embeddings, entries, f'{file_path}/service_catalog_embeddings.json')
+
+    def get_embedding(self, text):
+        """
+        テキストをBERTモデルを使用してベクトル化する
+        :param text: テキスト
+        :return: ベクトルデータ
+        """
+        inputs = self.tokenizer(text, return_tensors='pt', max_length=512, truncation=True)
+        outputs = self.model(**inputs)
+        embedding = outputs.last_hidden_state.mean(dim=1)
+        return embedding.squeeze(0).detach().numpy()
+
+    def save_embeddings_to_file(self, embeddings, entries, output_file):
+        """
+        ベクトルデータをJSONファイルに保存する
+        :param embeddings: ベクトルデータのリスト
+        :param entries: サービス情報のリスト
+        :param output_file: 保存先のファイルパス
+        """
+        data = {
+            'embeddings': np.array(embeddings).tolist(),
+            'entries': entries
+        }
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
