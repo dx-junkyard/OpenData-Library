@@ -274,7 +274,7 @@ class Html2HtagLayerStep:
                 entries.append(entry)
 
         # JSONデータとして保存
-        self.save_embeddings_to_file(overview_embeddings, entries, f'{file_path}/overview_embeddings.json')
+        self.save_embeddings_to_file(overview_embeddings, entries, f'{file_path}/service_catalog_embeddings.json')
 
     def get_embedding(self, text):
         """
