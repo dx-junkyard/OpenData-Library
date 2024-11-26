@@ -5,8 +5,18 @@ import hashlib
 import pandas as pd
 from bs4 import BeautifulSoup
 from lib.column_manager import ColumnManager
-from lib.htag_node import  HTagNode as Node
+from lib.htag_node import HTagNode as Node
+from openai import OpenAI
+import logging
 
+# OpenAIクライアントのセットアップ
+client = OpenAI(
+    base_url='http://localhost:11434/v1/',
+    api_key='ollama',
+)
+
+# ロギングの設定
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class HtmlConverter:
     def __init__(self, soup, url, columns):
@@ -71,28 +81,55 @@ class HtmlConverter:
 
         return collected_data
 
+    def create_summary(self, content):
+        prompt = f"""
+        以下の内容から、施設やサービスに関する概要を3つの短い文で要約してください：
+
+        {content}
+
+        出力形式：
+        1. [1つ目の要約文]
+        2. [2つ目の要約文]
+        3. [3つ目の要約文]
+        注意事項：
+    1. 提供されたテキスト内にある情報のみを使用し、外部情報は使用しないでください。
+    2. 各項目の情報は、必ず提供されたテキスト内に存在することを確認してから出力してください。
+    3. 抽出した情報は可能な限り簡潔にし、余分な説明は避けてください。
+    4. 出力前に正確な内容か、仮説と反証して、確認しろ
+        """
+
+        try:
+            chat_completion = client.chat.completions.create(
+                model='qwen2.5-coder:7b-instruct',
+                messages=[
+                    {
+                        'role': 'user',
+                        'content': prompt,
+                    }
+                ]
+            )
+            response = chat_completion.choices[0].message.content
+            logging.info("LLMの応答を受信しました")
+            return response.split('\n')
+        except Exception as e:
+            logging.error(f"LLMの呼び出しに失敗しました: {str(e)}")
+            return []
 
     def create_title(self, node=None):
-
         if node is None:
             node = self.root
 
-        # 項目検出層より上
         if node.level >= self.item_level:
             return 
         elif node.level > 0 and self.title is None:
             if node.title == "":
                 return
-            self.title = []
-            self.title.append(node.title)
-            self.summary = node.get_content(th=self.item_level)
+            self.title = [node.title]
+            content = node.get_content(th=self.item_level)
+            self.summary = self.create_summary(content)
 
-        # 子ノードも再帰的に処理
         for child in node.children:
             self.create_title(child)
-
-
-
 
 class Html2HtagLayerStep:
     def __init__(self, step_config):
@@ -111,7 +148,6 @@ class Html2HtagLayerStep:
         exclude_keywords = step_config.get('exclude_keywords', '')
         self.exclude_keywords = [keyword.strip() for keyword in exclude_keywords.split(",")] if exclude_keywords else []
         print(f"include / exclude : {self.include_keywords} / {self.exclude_keywords}")
-
 
     def load_mapping(self):
         with open(self.progress_json_path, 'r') as file:
@@ -141,7 +177,6 @@ class Html2HtagLayerStep:
     def execute(self):
         unique_hashes = set()
         unique_tables = []
-        service_json = None
 
         for url, filepath in self.url_mapping.items():
             if filepath.endswith('.html'):
@@ -149,12 +184,10 @@ class Html2HtagLayerStep:
                     html_content = file.read()
 
                 soup = BeautifulSoup(html_content, 'html.parser')
-                # キーワードチェック
                 if self.should_process(soup):
                     try:
                         extractor = HtmlConverter(soup, url, self.column_manager.get_column_config())
                         service_info = extractor.collect_data_from_nodes()
-                        # 空の要素は飛ばす
                         if len(service_info) == 0:
                             continue
                         if not self.result_check(extractor):
@@ -167,7 +200,7 @@ class Html2HtagLayerStep:
                             'items': extractor.summary
                         }
                         service_info['URL'] = {
-                            'items': url
+                            'items': [url]
                         }
 
                         service_json = json.dumps(service_info, ensure_ascii=False, indent=4)
@@ -175,16 +208,12 @@ class Html2HtagLayerStep:
                         if service_hash not in unique_hashes:
                             unique_hashes.add(service_hash)
                             unique_tables.append(service_info)
-                    except ValueError as e:
-                        print(f"Failed to parse html: {e}")
-                        print(f"  error URL : {url}")
-                    except IndexError as e:
-                        print(f"Table format error: {e}")
-                        print(f"  error URL : {url}")
+                    except Exception as e:
+                        logging.error(f"HTMLの処理中にエラーが発生しました: {url}")
+                        logging.error(f"エラーの詳細: {str(e)}")
                 else:
-                    print(f'処理対象の単語がふくまれていません')
+                    logging.info(f'処理対象の単語が含まれていません: {url}')
                 
-                    
         self.save_json(unique_tables, self.output_json_dir)
 
     def should_process(self, soup):
