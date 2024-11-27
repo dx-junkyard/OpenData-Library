@@ -5,7 +5,7 @@
         {
             "title": "pipeline本体",
             "comment": "pipeline",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/Common/Pipelines/003_pipeline_framework.py",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/pipeline_framework.py"
             "filename": "pipeline_framework.py"
         },
         {
