@@ -7,7 +7,7 @@ steps:
     progress_file: ./progress.json
     save_every: 10
     skip_flg: yes
-  - name: WebDataToJson
+  - name: WebHtml2Json
     type: html2htaglayer_step
     progress_file: ./progress.json
     output_json_dir: ./output_json
@@ -17,6 +17,11 @@ steps:
   - name: LLM Summary
     type: ollama_step
     progress_file: ./progress.json
-    input_json_file: ./output_json/service_catalog_small.json
+    input_json_file: ./output_json/service_catalog.json
     output_json_file: ./output_json/service_catalog_llm.json
-    skip_flg: no
+    skip_flg: yes
+  - name: Embedding step
+    type: embedding_step
+    service_catalog_json: ./output_json/service_catalog_llm.json
+    embeddings_file: ./output_json/service_catalog_embedding.json
+    skip_flg: yes
