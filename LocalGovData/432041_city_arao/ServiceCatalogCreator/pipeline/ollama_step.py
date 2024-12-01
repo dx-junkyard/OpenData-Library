@@ -67,6 +67,12 @@ class OllamaStep:
 
     def execute(self):
         data = self.get_url_content()
+        
+        # 変更点：概要フィールドの形式を修正し、itemsとしてリストで保持
+        for entry in data:
+            if "概要" in entry:
+                entry["概要"] = {"items": entry["概要"]}
+
         with open(self.output_json_path, "w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
