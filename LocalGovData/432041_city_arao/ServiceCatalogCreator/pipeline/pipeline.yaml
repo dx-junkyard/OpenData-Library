@@ -7,10 +7,16 @@ steps:
     progress_file: ./progress.json
     save_every: 10
     skip_flg: yes
-  - name: WebDataToJSON
+  - name: WebDataToJson
     type: html2htaglayer_step
     progress_file: ./progress.json
     output_json_dir: ./output_json
     columns_yaml: ./pipeline/columns.yaml
     include_keywords: "相談,窓口,補助,支給,提出,利用,対象,料金,対象,登録,予約,申請,申込み,申し込み,施設,設備"
     skip_flg: yes
+  - name: LLM Summary
+    type: ollama_step
+    progress_file: ./progress.json
+    input_json_file: ./output_json/service_catalog_small.json
+    output_json_file: ./output_json/service_catalog_llm.json
+    skip_flg: no

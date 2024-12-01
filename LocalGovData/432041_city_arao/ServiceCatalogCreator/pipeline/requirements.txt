@@ -10,3 +10,4 @@ lxml
 html5lib
 transformers==4.45.2
 torch==2.5.0
+openai>=0.27.0
