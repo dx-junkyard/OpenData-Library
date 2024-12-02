@@ -52,8 +52,9 @@ class OllamaStep:
     def get_url_content(self):
         """Replace the '概要' field with a summary from OllamaStep.create_summary()."""
         data = self.load_data()
+        total_entries = len(data)
 
-        for entry in data:
+        for index, entry in enumerate(data):
             url = entry.get("URL", {}).get("items")
             if url:
                 html_content = self.get_file_content(url)
@@ -62,7 +63,9 @@ class OllamaStep:
                     soup = BeautifulSoup(html_content, 'html.parser')
                     main_div = soup.find('div', id='contents')
                     entry["概要"] = self.ollama_client.create_summary(main_div)
-
+            # 進捗の割合を計算して画面に表示する
+            progress = (index + 1) / total_entries * 100
+            logging.info(f"Progress: {progress:.2f}% ({index + 1}/{total_entries})")
         return data
 
     def execute(self):
@@ -81,11 +84,17 @@ class OllamaClient:
     def __init__(self):
         # OpenAIクライアントのセットアップ
         self.client = OpenAI(
-            base_url='http://localhost:11434/v1/',
+#            base_url='http://localhost:11434/v1/',
+            base_url='http://host.docker.internal:11434/v1/',
             api_key='ollama',
         )
 
     def create_summary(self, content):
+        prompt_new = f"""
+        以下の内容を日本語で利用者向けのにサービスの説明を要約してほしい。
+
+        {content}
+        """
         prompt = f"""
         以下の内容から、施設やサービスに関する概要を3つの短い文で要約してください：
 
@@ -105,10 +114,11 @@ class OllamaClient:
         try:
             chat_completion = self.client.chat.completions.create(
                 model='qwen2.5-coder:7b-instruct',
+#                model='llama3',
                 messages=[
                     {
                         'role': 'user',
-                        'content': prompt,
+                        'content': prompt_new,
                     }
                 ]
             )

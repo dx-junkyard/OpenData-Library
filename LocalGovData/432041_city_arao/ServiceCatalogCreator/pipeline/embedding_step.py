@@ -5,6 +5,11 @@ from transformers import BertTokenizer, BertModel
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
+import logging  # ログ出力のために追加
+
+# ロギングの設定
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 
 
@@ -57,6 +62,8 @@ class EmbeddingStep:
         entries = []
 
         for service in service_catalog:
+            #logging.info(f"Service data: {service}")
+
             overview_data = service.get("概要", {}).get("items", [])
             if isinstance(overview_data, list):
                 overview = " ".join(overview_data)
@@ -69,9 +76,21 @@ class EmbeddingStep:
                 embedding = self.get_embedding(overview)
                 overview_embeddings.append(embedding)
 
+                formal_name_data = service.get("正式名称")
+                if isinstance(formal_name_data, dict) and "items" in formal_name_data:
+                    items = formal_name_data.get("items")
+                    if items is None:
+                        formal_name = "N/A"
+                    elif isinstance(items, list):
+                        formal_name = items[0] if items else "N/A"
+                    else:
+                        formal_name = str(items)
+                else:
+                    formal_name = "N/A"
+    
                 entry = {
                     'overview': overview,
-                    'formal_name': service.get("正式名称", {}).get("items", ["N/A"])[0],
+                    'formal_name': formal_name,
                     'url': service.get("URL", {}).get("items", "N/A")
                 }
                 entries.append(entry)
@@ -83,10 +102,5 @@ class EmbeddingStep:
         self.overview_embeddings, self.entries = self.get_overview_embeddings(self.service_catalog)
         if self.embeddings_file:
             self.save_embeddings_to_file(self.overview_embeddings, self.entries, self.embeddings_file)
-
-#        data = self.save_embedding(data, file_path)
-#        with open(self.output_json_path, "w", encoding="utf-8") as file:
-#            json.dump(data, file, ensure_ascii=False, indent=2)
-
 
 
